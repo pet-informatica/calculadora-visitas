@@ -7,6 +7,25 @@ function appendToDisplay(value) {
     }
 }
 
+function fetchResult(){
+    const display = document.getElementById('display');
+    const expression = display.textContent;
+    fetch('http://localhost:5000/calculate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ expression })
+    })
+        .then(response => response.json())
+        .then(data => {
+            display.textContent = data.result;
+        })
+        .catch(() => {
+            display.textContent = 'Erro';
+        });
+}
+
 function clearDisplay() {
     document.getElementById('display').textContent = '0';
 }
